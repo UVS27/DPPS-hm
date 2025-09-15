@@ -23,16 +23,16 @@ services:
     restart: always
     ports:
       - 8080:8080
-#
-#  pinger:
-#    image: dpps-app:1.0
-#    build:
-#      context: ..
-#      dockerfile: Dockerfile
-#    restart: always
-#    env_file:
-#      - .env
-#    volumes:
-#      - ../file_logs.log:/app/file_logs.log
-#    depends_on:
-#      - db
+
+  pinger:
+    image: dpps-app:1.0
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ../file_logs.log:/app/file_logs.log
+    depends_on:
+      - db
