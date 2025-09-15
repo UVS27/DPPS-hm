@@ -4,26 +4,26 @@ import os
 import time
 import sys
 
-with open("config.json", "r", encoding="utf-8") as f:
+with open("config_os.json", "r", encoding="utf-8") as f:
     config = json.load(f)
 
-user = os.getenv("my_db_user")
-password = os.getenv("his_db_password")
+user = os.getenv("MY_DB_USER")
+password = os.getenv("HIS_DB_PASSWORD")
 
 if not user or not password:
-    print("Ошибка: переменные окружения my_db_user и his_db_password должны быть установлены.")
+    print("Ошибка: переменные окружения MY_DB_USER и HIS_DB_PASSWORD должны быть установлены.")
     exit(1)
 
-interval_min = os.getenv("ping_postgre_db", "5")
+interval_min = os.getenv("PING_POSTGRE_DB", "5")
 try:
     interval = int(interval_min) * 60
 except ValueError:
-    print("Ошибка: переменная ping_postgre_db должна быть числом. Используется автоматически 5 минут.")
+    print("Ошибка: переменная PING_POSTGRE_DB должна быть числом. Используется автоматически 5 минут.")
     interval = 5 * 60
 
-connect_timeout = int(os.getenv("connect_timeout_db", "10"))
+connect_timeout = int(os.getenv("CONNECT_TIMEOUT_DB", "10"))
 
-log_file_path = os.getenv("log_file")
+log_file_path = os.getenv("LOG_FILE_PATH")
 log_file = None
 if log_file_path:
     try:

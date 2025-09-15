@@ -1,0 +1,38 @@
+# Use postgres/example user/password credentials
+
+services:
+
+  db:
+    image: sdl/postgres:ru
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - 5433:5432
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+#
+#  pinger:
+#    image: dpps-app:1.0
+#    build:
+#      context: ..
+#      dockerfile: Dockerfile
+#    restart: always
+#    env_file:
+#      - .env
+#    volumes:
+#      - ../file_logs.log:/app/file_logs.log
+#    depends_on:
+#      - db
