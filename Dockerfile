@@ -22,4 +22,4 @@ ENV PING_POSTGRE_DB=5
 ENV CONNECT_TIMEOUT_DB=10
 ENV LOG_FILE_PATH=/file_logs.log
 
-CMD ["python", "main.py"]
+CMD ["python", "-u", "main.py"]
