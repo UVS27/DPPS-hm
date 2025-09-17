@@ -14,7 +14,7 @@ WORKDIR /DPPS
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY main.py config.json ./
+COPY main.py config_docker.json ./
 
 ENV MY_DB_USER=new_role
 ENV HIS_DB_PASSWORD=1234

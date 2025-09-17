@@ -4,7 +4,9 @@ import os
 import time
 import sys
 
-with open("config_os.json", "r", encoding="utf-8") as f:
+# with open("config_os.json", "r", encoding="utf-8") as f:
+#     config = json.load(f)
+with open("config_docker.json", "r", encoding="utf-8") as f:
     config = json.load(f)
 
 user = os.getenv("MY_DB_USER")
