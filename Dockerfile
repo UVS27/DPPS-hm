@@ -16,10 +16,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY main.py config_docker.json ./
 
-ENV MY_DB_USER=new_role
-ENV HIS_DB_PASSWORD=1234
-ENV PING_POSTGRE_DB=5
-ENV CONNECT_TIMEOUT_DB=10
-ENV LOG_FILE_PATH=/file_logs.log
-
 CMD ["python", "-u", "main.py"]
