@@ -1,5 +1,5 @@
 {
     "host": "db",
     "port": 5432,
-    "database": "kovalev_dpps"
+    "database": "kovalev_dpps2"
 }
