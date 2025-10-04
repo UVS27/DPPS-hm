@@ -1,0 +1,9 @@
+{
+    "host": "db",
+    "port": 5432,
+    "database": "software_company_db",
+    "limit_columns": 25,
+    "limit_rows": 25,
+    "limit_table_columns": 15,
+    "limit_table_rows": 15
+}
