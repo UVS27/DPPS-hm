@@ -115,12 +115,15 @@ def main():
         )
         cursor = connect.cursor()
 
-        cursor.execute("""
-                       SELECT table_name
-                       FROM information_schema.tables
-                       WHERE table_schema = 'public'
-                       ORDER BY table_name;
-                       """)
+        query = sql.SQL("""
+                        SELECT table_name
+                        FROM information_schema.tables
+                        WHERE table_schema = %s
+                        ORDER BY {order_col};
+                        """).format(
+            order_col=sql.Identifier("table_name")
+        )
+        cursor.execute(query, ("public",))
         tables = cursor.fetchall()
 
         print("\nДоступные таблицы:")
