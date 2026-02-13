@@ -9,12 +9,11 @@ RUN apt-get update && apt-get install -y \
 
 ENV LANG=ru_RU.utf8
 
-WORKDIR /app
+WORKDIR /DPPS
 
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY main.py config_docker.json ./
 
-CMD ["bash"]
+CMD ["python", "-u", "main.py"]

@@ -24,20 +24,30 @@ services:
     ports:
       - 8080:8080
 
-  app:
-    image: dpps-app3:1.0
+  vault:
+    image: hashicorp/vault:latest
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_ADDR: "http://127.0.0.1:8200"
+    volumes:
+      - ./vault_file:/vault/file
+      - ./vault-config.hcl:/vault/config/vault.hcl
+    command: vault server -config=/vault/config/vault.hcl
+
+
+  pinger:
+    image: dpps-app6:1.0
     build:
-      context: ../..
-      dockerfile: ../../Dockerfile
-    container_name: my_app
-    stdin_open: true
-    tty: true
+      context: ..
+      dockerfile: Dockerfile
+    restart: always
     env_file:
       - .env
-    environment:
-      LOG_USER_FILE_PATH: ${LOG_USER_FILE_PATH}
-      LOG_FULL_FILE_PATH: ${LOG_FULL_FILE_PATH}
     volumes:
-      - ./logs:/app/logs
+      - ../file_logs.log:/app/file_logs.log
     depends_on:
       - db
+      - vault
