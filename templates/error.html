@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="alert alert-danger">
+    {{ message }}
+  </div>
+  <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('login') }}">На страницу входа</a>
+{% endblock %}
+

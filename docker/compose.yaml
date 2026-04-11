@@ -25,10 +25,10 @@ services:
       - 8080:8080
 
   app:
-    image: dpps-app3:1.0
+    image: dpps-app7:2.1
     build:
-      context: ../..
-      dockerfile: ../../Dockerfile
+      context: ..
+      dockerfile: Dockerfile
     container_name: my_app
     stdin_open: true
     tty: true
@@ -37,7 +37,15 @@ services:
     environment:
       LOG_USER_FILE_PATH: ${LOG_USER_FILE_PATH}
       LOG_FULL_FILE_PATH: ${LOG_FULL_FILE_PATH}
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: software_company_db
+      FLASK_ENV: production
+      SESSION_TIMEOUT_MINUTES: 10
+      APP_SECRET_KEY: dpps-dev-secret
     volumes:
-      - ./logs:/app/logs
+      - ../logs:/app/logs
+    ports:
+      - 5000:5000
     depends_on:
       - db

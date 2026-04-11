@@ -15,6 +15,9 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY main.py config_docker.json ./
+COPY main.py webapp.py config_docker.json ./
+COPY templates ./templates
 
-CMD ["bash"]
+EXPOSE 5000
+
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "webapp:app"]

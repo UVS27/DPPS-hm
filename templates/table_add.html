@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h4 class="mb-1">Добавить строку: <code>{{ table_name }}</code></h4>
+      <div class="text-muted small">
+        Нажмите <strong>+</strong>, заполните поля и сохраните. Поля NOT NULL обязательны.
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('tables') }}">К таблицам</a>
+      <a class="btn btn-outline-primary btn-sm" href="{{ url_for('table_view', table_name=table_name) }}">Посмотреть</a>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="text-muted small">Колонок для ввода: {{ columns|length }}</div>
+        <button class="btn btn-success btn-sm" type="button" id="showFormBtn">+ Добавить строку</button>
+      </div>
+
+      <form method="post" action="{{ url_for('table_add_post', table_name=table_name) }}" id="addForm" style="display:none;">
+        <div class="row g-3">
+          {% for c in columns %}
+            <div class="col-md-6">
+              <label class="form-label">
+                {{ c.name }}
+                {% if not c.nullable %}<span class="text-danger">*</span>{% endif %}
+                <span class="text-muted small">({{ c.data_type }})</span>
+              </label>
+              <input
+                class="form-control"
+                name="{{ c.name }}"
+                {% if not c.nullable %}required{% endif %}
+                placeholder="{% if c.nullable %}NULL разрешён{% else %}обязательно{% endif %}"
+              />
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Сохранить</button>
+          <button class="btn btn-outline-secondary" type="button" id="cancelBtn">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="text-muted small mt-3">
+    <div><span class="text-danger">*</span> — поле обязательно (NOT NULL).</div>
+    <div>Колонки с DEFAULT/IDENTITY/GENERATED не показываются: их заполнит БД (включая авто‑id).</div>
+  </div>
+
+  <script>
+    const btn = document.getElementById('showFormBtn');
+    const form = document.getElementById('addForm');
+    const cancelBtn = document.getElementById('cancelBtn');
+    btn.addEventListener('click', () => {
+      form.style.display = '';
+      btn.disabled = true;
+    });
+    cancelBtn.addEventListener('click', () => {
+      form.reset();
+      form.style.display = 'none';
+      btn.disabled = false;
+    });
+  </script>
+{% endblock %}
+

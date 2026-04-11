@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h4 class="mb-0">Таблицы в базе</h4>
+    <span class="text-muted small">Пользователь: <code>{{ session.get('db_user') }}</code></span>
+  </div>
+
+  {% if not table_names %}
+    <div class="alert alert-info">В схеме <code>public</code> не найдено таблиц.</div>
+  {% else %}
+    <div class="list-group shadow-sm">
+      {% for t in table_names %}
+        <div class="list-group-item">
+          <div class="row align-items-center g-2">
+            <div class="col-md-4">
+              <strong>{{ t }}</strong>
+            </div>
+            <div class="col-md-8 text-md-end">
+              <a class="btn btn-outline-primary btn-sm" href="{{ url_for('table_view', table_name=t) }}">Посмотреть</a>
+              <a class="btn btn-outline-success btn-sm" href="{{ url_for('table_add', table_name=t) }}">Добавить данные</a>
+              <a class="btn btn-outline-danger btn-sm" href="{{ url_for('table_delete', table_name=t) }}">Удалить данные</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}
+

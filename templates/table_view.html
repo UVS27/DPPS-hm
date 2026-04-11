@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h4 class="mb-1">Просмотр таблицы: <code>{{ table_name }}</code></h4>
+      <div class="text-muted small">Показываются первые 200 строк (ORDER BY 1).</div>
+    </div>
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('tables') }}">Назад</a>
+      <a class="btn btn-outline-success btn-sm" href="{{ url_for('table_add', table_name=table_name) }}">Добавить</a>
+      <a class="btn btn-outline-danger btn-sm" href="{{ url_for('table_delete', table_name=table_name) }}">Удалить</a>
+    </div>
+  </div>
+
+  {% if not rows %}
+    <div class="alert alert-info">Таблица пустая или нет строк в лимите.</div>
+  {% else %}
+    <div class="card shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover mb-0 align-middle">
+          <thead class="table-dark">
+            <tr>
+              {% for c in columns %}
+                <th scope="col">{{ c }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in rows %}
+              <tr class="{% if pk %}table-row-editable{% endif %}" {% if pk and pk_idx is not none %}data-pk="{{ r[pk_idx] }}"{% endif %}>
+                {% for v in r %}
+                  <td class="text-nowrap">{{ v if v is not none else "NULL" }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% if pk and pk_idx is not none %}
+      <div class="text-muted small mt-2">Подсказка: двойной клик по строке — редактировать.</div>
+      <script>
+        document.querySelectorAll(".table-row-editable").forEach((tr) => {
+          tr.addEventListener("dblclick", () => {
+            const pk = tr.getAttribute("data-pk");
+            if (!pk) return;
+            const url = "{{ url_for('table_edit', table_name=table_name, pk_value='__PK__') }}".replace("__PK__", encodeURIComponent(pk));
+            window.location.href = url;
+          });
+        });
+      </script>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
