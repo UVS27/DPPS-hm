@@ -1,0 +1,17 @@
+.idea/
+.vscode/
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+*.log
+logs/
+
+docker/pg_data/
+docker/vault_file/
+docker/keys.txt
+
+*.xlsx
