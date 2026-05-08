@@ -851,7 +851,7 @@ def _fk_target_exists(cur, fk: ForeignKeyInfo, value: Any) -> bool:
 
 def _get_unique_constraints(cur, table_name: str) -> dict[str, list[str]]:
     """
-    Возвращает UNIQUE constraints как {constraint_name: [col1, col2, ...]}.
+    Возвращает UNIQUE constraints как {constraint_name: [col1, col2, ...]}
     """
     cur.execute(
         """
